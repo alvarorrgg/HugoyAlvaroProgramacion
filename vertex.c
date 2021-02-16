@@ -77,14 +77,15 @@ Status vertex_setState (Vertex * v, const Label state){
 int vertex_cmp (const void * v1, const void * v2){
 	Vertex* aux_v1 = (Vertex*) v1;
 	Vertex* aux_v2 = (Vertex*) v2;	
-	
 	if(aux_v1==NULL || aux_v2==NULL){
 		return 0;}
 	if(aux_v1->id - aux_v2->id == 0){
 		return strcmp(aux_v1->tag,aux_v2->tag);
+		
 	}
 	else{
-		return aux_v1->id-aux_v2->id;
+		return aux_v1->id - aux_v2->id;
+		
 		}
 	}
 void * vertex_copy (const void * src){

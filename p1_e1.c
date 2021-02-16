@@ -22,13 +22,13 @@ int main(){
 	else{
 		printf("Equals? No\n");
 	}
-	printf("%s",vertex_getTag(v2));
+	printf("Vertex 2 tag: %s\n",vertex_getTag(v2));
 	Vertex* aux_v1 = vertex_copy(v1);
-	printf("%li",vertex_getId(aux_v1));
+	printf("Vertex 3 id: %li\n",vertex_getId(aux_v1));
 	vertex_print(stdout,v1);
 	vertex_print(stdout,aux_v1);
 	printf("\n");
-	if(vertex_cmp(v1,v2) == 0){
+	if(vertex_cmp(v1,aux_v1) == 0){
 		printf("Equals? Yes\n");
 		}
 	else{
@@ -36,6 +36,5 @@ int main(){
 	}
 	vertex_free(v1);
 	vertex_free(v2);
-	vertex_free(aux_v1);
 	return 0;
 }
