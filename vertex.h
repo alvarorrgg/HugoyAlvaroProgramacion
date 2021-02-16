@@ -218,5 +218,4 @@ void * vertex_copy (const void * src);
  * successfully. If there have been errors returns -1.
  */
 int vertex_print (FILE * pf, const void * v);
-
 #endif /* VERTEX_H_ */

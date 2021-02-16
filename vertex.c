@@ -31,10 +31,11 @@ Status vertex_setField (Vertex *v, char *key, char *value) {
 }
 
 Vertex * vertex_init (){
-	v=malloc(sizeof(Vertex));
+	Vertex *v=(Vertex*) malloc(sizeof(Vertex));
 	v->id=0;
-	v->tag="";
+	strcpy(v->tag,"");
 	v->state=WHITE;
+	return v;
 }
 
 void vertex_free (void * v){
@@ -64,7 +65,7 @@ Status vertex_setId (Vertex * v, const long id){
 Status vertex_setTag (Vertex * v, const char * tag){
 	if(v==NULL || strlen(tag)>64){
 	return ERROR;}
-	v->tag=tag;
+	strcpy(v->tag,tag);
 	return OK;
 	}
 Status vertex_setState (Vertex * v, const Label state){
@@ -74,13 +75,33 @@ Status vertex_setState (Vertex * v, const Label state){
 	return OK;
 	}
 int vertex_cmp (const void * v1, const void * v2){
+	Vertex* aux_v1 = (Vertex*) v1;
+	Vertex* aux_v2 = (Vertex*) v2;	
 	
+	if(aux_v1==NULL || aux_v2==NULL){
+		return 0;}
+	if(aux_v1->id - aux_v2->id == 0){
+		return strcmp(aux_v1->tag,aux_v2->tag);
+	}
+	else{
+		return aux_v1->id-aux_v2->id;
+		}
 	}
 void * vertex_copy (const void * src){
+	Vertex* aux_v1 = (Vertex*) src;
 	
+	if(aux_v1==NULL){
+		return NULL;
+	}
+	return aux_v1;
 	}
 int vertex_print (FILE * pf, const void * v){
-	
+	Vertex* aux_v = (Vertex*) v;
+	if(aux_v==NULL){
+		return -1;
+	}
+	printf("[ %li , %s, %i ]",aux_v->id,aux_v->tag,aux_v->state);
+	return 3;
 	}
 
 Vertex *vertex_initFromString(char *descr){
