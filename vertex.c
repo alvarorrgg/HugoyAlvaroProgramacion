@@ -101,7 +101,7 @@ int vertex_print (FILE * pf, const void * v){
 	if(aux_v==NULL){
 		return -1;
 	}
-	printf("[ %li , %s, %i ]",aux_v->id,aux_v->tag,aux_v->state);
+	fprintf(stdout,"[ %li , %s, %i ]",aux_v->id,aux_v->tag,aux_v->state);
 	return 3;
 	}
 

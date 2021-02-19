@@ -1,0 +1,6 @@
+Ejercicio1:
+linea 1: mensaje que le dice a la consola que es un script.
+linea 3: es un echo que muestra por pantalla "Compilando..." para que se sepa que el programa funcina.
+linea 4: Compilo p1_e1.c con el flag -Wall que sirve para mostrar errores por pantalla. Esta linea forma el archivo p1_e1.o
+linea 5: Compilo vertex.c con el flag -Wall que sirve para mostrar errores por pantalla. Esta linea forma el archivo vertex.o
+linea 6: Enlazo tanto p1_e1.o como vertex.o en un archivo en este caso p1_e1 que será nuestro ejecutable.

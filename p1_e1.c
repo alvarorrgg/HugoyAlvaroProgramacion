@@ -38,3 +38,4 @@ int main(){
 	vertex_free(v2);
 	return 0;
 }
+

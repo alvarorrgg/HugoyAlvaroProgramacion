@@ -11,4 +11,4 @@ vertex.c: vertex.h types.h
 
 clean:
 	@echo Limpiando
-	rm -rf *.o ocaEXE
+	rm -rf *.o p1_e1
