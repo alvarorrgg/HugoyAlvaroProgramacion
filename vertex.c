@@ -31,7 +31,7 @@ Status vertex_setField (Vertex *v, char *key, char *value) {
 }
 
 Vertex * vertex_init (){
-	Vertex *v=(Vertex*) malloc(sizeof(Vertex));
+	Vertex *v=(Vertex*) malloc(sizeof(Vertex)); 
 	v->id=0;
 	strcpy(v->tag,"");
 	v->state=WHITE;

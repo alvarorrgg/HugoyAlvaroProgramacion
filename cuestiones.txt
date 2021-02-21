@@ -1,6 +1,15 @@
-Ejercicio1:
-linea 1: mensaje que le dice a la consola que es un script.
-linea 3: es un echo que muestra por pantalla "Compilando..." para que se sepa que el programa funcina.
-linea 4: Compilo p1_e1.c con el flag -Wall que sirve para mostrar errores por pantalla. Esta linea forma el archivo p1_e1.o
-linea 5: Compilo vertex.c con el flag -Wall que sirve para mostrar errores por pantalla. Esta linea forma el archivo vertex.o
-linea 6: Enlazo tanto p1_e1.o como vertex.o en un archivo en este caso p1_e1 que será nuestro ejecutable.
+Ejercicio 1:
+	linea 1: mensaje que le dice a la consola que es un script.
+	linea 3: es un echo que muestra por pantalla "Compilando..." para que se sepa que el programa funcina.
+	linea 4: Compilo p1_e1.c con el flag -Wall que sirve para mostrar errores por pantalla. Esta linea forma el archivo p1_e1.o
+	linea 5: Compilo vertex.c con el flag -Wall que sirve para mostrar errores por pantalla. Esta linea forma el archivo vertex.o
+	linea 6: Enlazo tanto p1_e1.o como vertex.o en un archivo en este caso p1_e1 que será nuestro ejecutable.
+	
+Ejercicio 2: 
+	a)La función vertex_cmp_ptr devolverá 1 (true) en el caso a ya tanto v como p son punteros Vertex y como se igualan con la instrucción v = (Vertex*) p entonces ambos punteros valen lo mismo.
+	b)La función vertex_cmp_ptr devolverá 1 también en este caso ya que aunque 
+	
+Ejercicio 3:
+	a) La implementación en si es correcta, el problema es que en la linea donde se define el puntero Vertex, se llama a la estructura Vertex y esta estructura es una estructura que aunque tiene su cabecera en vertex.h que es publica, tiene su definición en vertex.c de manera privada por lo cual a la hora de reservar memoria para el puntero Vertex, el programa sabe que la estructura existe pero no que tiene dentro por lo cual no es correcto.
+	b) Sin embargo, en este caso, aunque es muy parecido al anterior, se está reservando la memoria dentro de Vertex.c y es en Vertex.c donde se encuentra la estructura de datos por lo cual el programa si sabe cuanta memoria tiene que reservar y por lo cual es correcta la implementación.
+	c)La implementación de las funciones esta bien, el fallo viene a la hora de llamar a la función vertex_init 
