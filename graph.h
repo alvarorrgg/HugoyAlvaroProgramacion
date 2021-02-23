@@ -14,7 +14,7 @@
 #include "vertex.h"
 
 typedef struct _Graph Graph;
-
+Status graph_newVertex(Graph *g,long id, char *tag, Label state);
 /**
  * @brief Creates a new empty graph.
  *
@@ -24,6 +24,7 @@ typedef struct _Graph Graph;
  * @return A pointer to the graph if it was correctly allocated, 
  * NULL otherwise.
  **/
+ 
 Graph * graph_init();
 
 /**
@@ -48,7 +49,7 @@ void graph_free(Graph *g);
  * @return Returns OK if the vertex could be created (or if it exists 
  * already), ERROR otherwise.
  **/
-Status graph_newVertex(Graph *g, char *desc);
+Status graph_newVertexfromString(Graph *g, char *desc);
 
 /**
  * @brief Creates an edge between to vertices of a graph.

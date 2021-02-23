@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "vertex.h"
 # define MAX_VTX 4096
 #define TAG_LENGTH 64
 
@@ -9,7 +10,19 @@ Bool connections[MAX_VTX][MAX_VTX]; /*!<Adjacency matrix */
 int num_vertices; /*!<Total number of vertices */
 int num_edges; /*!<Total number of edges */
 };
-
+Status graph_newVertex(Graph *g,long id, char *tag, Label state){
+	if(g==NULL || id<0 || strlen(tag)<0 ){
+		return ERROR;
+		}
+	Vertex *v=vertex_init (); 
+	vertex_setId ( v, id);
+	vertex_setTag ( v, tag);
+	vertex_setState ( v, state);
+	g->vertices[g->num_vertices]=v;
+	g->num_vertices=g->num_vertices+1;
+	return OK;
+	}
+	
 Graph * graph_init(){
 	Graph *g=(Graph*)malloc(sizeof(Graph));
 	if(g==NULL){
@@ -22,7 +35,7 @@ void graph_free(Graph *g){
 	free(g);
 }
 
-Status graph_newVertex(Graph *g, char *desc){
+Status graph_newVertexfromString(Graph *g, char *desc){
 	if( g==NULL){
 		return ERROR;
 	}
