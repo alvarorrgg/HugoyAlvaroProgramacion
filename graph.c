@@ -34,7 +34,7 @@ Status graph_newVertex(Graph *g, char *desc){
 	return OK;
 	else
 	g->vertices=v;
-	num_vertices=num_vertices+1;
+	g->num_vertices=g->num_vertices+1;
 	return OK;
 }
 

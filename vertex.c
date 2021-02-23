@@ -89,8 +89,10 @@ int vertex_cmp (const void * v1, const void * v2){
 		}
 	}
 void * vertex_copy (const void * src){
+	if(src==NULL){
+	return NULL;
+	}
 	Vertex* aux_v1 = (Vertex*) src;
-	
 	if(aux_v1==NULL){
 		return NULL;
 	}
@@ -101,7 +103,7 @@ int vertex_print (FILE * pf, const void * v){
 	if(aux_v==NULL){
 		return -1;
 	}
-	fprintf(stdout,"[ %li , %s, %i ]",aux_v->id,aux_v->tag,aux_v->state);
+	fprintf(stdout,"[%li, %s, %i]",aux_v->id,aux_v->tag,aux_v->state);
 	return 3;
 	}
 
