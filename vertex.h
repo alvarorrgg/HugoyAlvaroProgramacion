@@ -21,6 +21,7 @@
 #include "types.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /** 
  * @brief Label to characterize the vertex state (to be used in P2)

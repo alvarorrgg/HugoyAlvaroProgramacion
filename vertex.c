@@ -64,7 +64,8 @@ Status vertex_setId (Vertex * v, const long id){
 	}
 Status vertex_setTag (Vertex * v, const char * tag){
 	if(v==NULL || strlen(tag)>64){
-	return ERROR;}
+	return ERROR;
+	}
 	strcpy(v->tag,tag);
 	return OK;
 	}
@@ -96,6 +97,7 @@ void * vertex_copy (const void * src){
 	}
 	return aux_v1;
 	}
+	
 int vertex_print (FILE * pf, const void * v){
 	Vertex* aux_v = (Vertex*) v;
 	if(aux_v==NULL){
