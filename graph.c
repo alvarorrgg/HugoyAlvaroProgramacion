@@ -26,17 +26,18 @@ Status graph_newVertex(Graph *g, char *desc){
 	if( g==NULL){
 		return ERROR;
 	}
-	v*=vertex_initFromString(desc);
+	Vertex *v=vertex_initFromString(desc);
 	if(v==NULL){
 		return ERROR;
 	}
-	if(graph_contains(g, v->id)){
+	if(graph_contains(g, vertex_getId (v))){
 		free(v);
 		return OK;
+	}
 	else{
-	g->vertices=v;
-	g->num_vertices=g->num_vertices+1;
-	free(v);
+		g->vertices[g->num_vertices]=v;
+		g->num_vertices=g->num_vertices+1;
+		free(v);
 	return OK;
 	}
 }
@@ -52,7 +53,7 @@ Status graph_newEdge(Graph *g, long orig, long dest){
 
 Bool graph_contains(const Graph *g, long id){
 	int i;
-	for(i=0;i<num_vertices;i++){
+	for(i=0;i<g->num_vertices;i++){
 		if(vertex_getId (g->vertices[i])==id){
 			return TRUE;
 		}
@@ -87,7 +88,7 @@ Bool graph_connectionExists(const Graph *g, long orig, long dest){
 int graph_getNumberOfConnectionsFromId(const Graph *g, long id){
 	int i,contador=0;
 	for(i=0;i<g->num_vertices;i++){
-		if(graph_connectionExists(g,id,vertex_getId (g->vertices[i])){
+		if(graph_connectionExists(g,id,vertex_getId (g->vertices[i]))){
 			contador++;
 			}
 		}
@@ -100,7 +101,7 @@ long *graph_getConnectionsFromId(const Graph *g, long id){
 	int contador=0;
 	long *conexiones=(long*) malloc(graph_getNumberOfConnectionsFromId(g,id)*sizeof(long));
 	for(int i=0;i<g->num_vertices;i++){
-		if(graph_connectionExists(g,id,vertex_getId (g->vertices[i])){
+		if(graph_connectionExists(g,id,vertex_getId (g->vertices[i]))){
 			conexiones[contador]=vertex_getId (g->vertices[i]);
 			contador++;
 			}
@@ -113,11 +114,12 @@ int graph_getNumberOfConnectionsFromTag(const Graph *g, char *tag){
 	if(g==NULL || strlen(tag)<=0){
 		return -1;
 	}
-	for(int i =0;i<num_vertices;i++){
-		if(strcmp(tag,vertex_getTag (g->vertices[i])==0){
+	for(int i =0;i<g->num_vertices;i++){
+		if(strcmp(tag,vertex_getTag (g->vertices[i]))==0){
 			seleccion=i;
-	}
-	return graph_getNumberOfConnectionsFromId(g,vertex_getId (g->vertices[seleccion]));
+	}	
+}
+return graph_getNumberOfConnectionsFromId(g,vertex_getId (g->vertices[seleccion]));
 }
 
 long *graph_getConnectionsFromTag(const Graph *g, char *tag){
@@ -125,16 +127,16 @@ long *graph_getConnectionsFromTag(const Graph *g, char *tag){
 	if(g==NULL || strlen(tag)<=0){
 		return NULL;
 	}
-	char *conexiones[TAG_LENGTH]==(char*) malloc(graph_getNumberOfConnectionsFromTag(g,tag)*sizeof(char));
+	long *conexiones=(long*) malloc(graph_getNumberOfConnectionsFromTag(g,tag)*sizeof(long));
 	
-	for(int i =0;i<num_vertices;i++){
-		if(strcmp(tag,vertex_getTag (g->vertices[i])==0){
+	for(int i =0;i<g->num_vertices;i++){
+		if(strcmp(tag,vertex_getTag (g->vertices[i]))==0){
 			seleccion=i;
 		}
 	}
 	for(int i=0;i<g->num_vertices;i++){
-		if(graph_connectionExists(g,vertex_getId (g->vertices[seleccion]),vertex_getId (g->vertices[i])){
-			conexiones[contador]=vertex_getTag (g->vertices[i]);
+		if(graph_connectionExists(g,vertex_getId (g->vertices[seleccion]),vertex_getId (g->vertices[i]))){
+			conexiones[contador]=vertex_getId (g->vertices[i]);
 			contador++;
 			}
 		}
@@ -143,9 +145,18 @@ long *graph_getConnectionsFromTag(const Graph *g, char *tag){
 }
 
 int graph_print (FILE *pf, const Graph *g){
+	if(g==NULL) return -1;
 	
+	for(int i =0;i<g->num_vertices;i++){
+		fprintf(stdout,"\n");
+		vertex_print (pf, g->vertices[i]);
+		fprintf(stdout,": ");
+		for(int j=0; j<g->num_vertices;j++){
+			if(graph_connectionExists(g,vertex_getId (g->vertices[i]),vertex_getId (g->vertices[j]))){
+			vertex_print (pf, g->vertices[j]);
+			}
+		}
+	}
+	return 1;
 }
 
-Status graph_readFromFile (FILE *fin, Graph *g){
-	
-}
