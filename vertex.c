@@ -91,7 +91,6 @@ int vertex_cmp (const void * v1, const void * v2){
 	}
 void * vertex_copy (const void * src){
 	Vertex* aux_v1 = (Vertex*) src;
-	
 	if(aux_v1==NULL){
 		return NULL;
 	}

@@ -10,18 +10,7 @@ Bool connections[MAX_VTX][MAX_VTX]; /*!<Adjacency matrix */
 int num_vertices; /*!<Total number of vertices */
 int num_edges; /*!<Total number of edges */
 };
-Status graph_newVertex(Graph *g,long id, char *tag, Label state){
-	if(g==NULL || id<0 || strlen(tag)<0 ){
-		return ERROR;
-		}
-	Vertex *v=vertex_init (); 
-	vertex_setId ( v, id);
-	vertex_setTag ( v, tag);
-	vertex_setState ( v, state);
-	g->vertices[g->num_vertices]=v;
-	g->num_vertices=g->num_vertices+1;
-	return OK;
-	}
+
 	
 Graph * graph_init(){
 	Graph *g=(Graph*)malloc(sizeof(Graph));
@@ -35,7 +24,10 @@ void graph_free(Graph *g){
 	free(g);
 }
 
-Status graph_newVertexfromString(Graph *g, char *desc){
+Status graph_newVertex(Graph *g, char *desc){
+	printf("\nVertices: %i\n",g->num_vertices);
+	printf("\nId 0: %li\n",vertex_getId(g->vertices[0]));
+	printf("\nId 1: %li\n",vertex_getId(g->vertices[1]));
 	if( g==NULL){
 		return ERROR;
 	}
@@ -43,16 +35,20 @@ Status graph_newVertexfromString(Graph *g, char *desc){
 	if(v==NULL){
 		return ERROR;
 	}
+	
 	if(graph_contains(g, vertex_getId (v))){
 		free(v);
 		return OK;
 	}
 	else{
-		g->vertices[g->num_vertices]=v;
-		g->num_vertices=g->num_vertices+1;
-		free(v);
+			g->vertices[g->num_vertices]=v;
+			g->num_vertices++;
+	    }
+	printf("\nId 0: %li\n",vertex_getId(g->vertices[0]));
+	printf("\nId 1: %li\n",vertex_getId(g->vertices[1]));
+	printf("\nVertices: %i\n",g->num_vertices);
 	return OK;
-	}
+	
 }
 
 Status graph_newEdge(Graph *g, long orig, long dest){
@@ -65,9 +61,8 @@ Status graph_newEdge(Graph *g, long orig, long dest){
 }
 
 Bool graph_contains(const Graph *g, long id){
-	int i;
-	for(i=0;i<g->num_vertices;i++){
-		if(vertex_getId (g->vertices[i])==id){
+	for(int i=0; i<g->num_vertices ; i++){
+		if(vertex_getId(g->vertices[i])==id){
 			return TRUE;
 		}
    	}

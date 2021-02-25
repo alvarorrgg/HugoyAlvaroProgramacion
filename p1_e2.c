@@ -8,8 +8,9 @@ int main(){
 Graph *g;
 long *conexiones;
 g=graph_init();
-printf("Inserting Madrid, 111, WHITE, result: %i \n",graph_newVertex(g,111,"Madrid",WHITE));
-printf("Inserting Toledo, 222, WHITE, result: %i \n",graph_newVertex(g,222,"Toledo",WHITE));
+printf("Inserting Madrid, 111, WHITE, result: %i \n",graph_newVertex(g, "id:111 tag:Madrid state:0"));
+printf("Inserting Toledo, 222, WHITE, result: %i \n",graph_newVertex(g, "id:222 tag:Toledo state:0"));
+printf("Contains?%i %i\n",graph_contains(g,111),graph_contains(g,222));
 printf("Inserting edge 222-->111\n");
 graph_newEdge(g,222, 111);
 printf("111-->222?");
