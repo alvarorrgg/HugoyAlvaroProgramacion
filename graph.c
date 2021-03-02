@@ -25,9 +25,6 @@ void graph_free(Graph *g){
 }
 
 Status graph_newVertex(Graph *g, char *desc){
-	printf("\nVertices: %i\n",g->num_vertices);
-	printf("\nId 0: %li\n",vertex_getId(g->vertices[0]));
-	printf("\nId 1: %li\n",vertex_getId(g->vertices[1]));
 	if( g==NULL){
 		return ERROR;
 	}
@@ -44,9 +41,6 @@ Status graph_newVertex(Graph *g, char *desc){
 			g->vertices[g->num_vertices]=v;
 			g->num_vertices++;
 	    }
-	printf("\nId 0: %li\n",vertex_getId(g->vertices[0]));
-	printf("\nId 1: %li\n",vertex_getId(g->vertices[1]));
-	printf("\nVertices: %i\n",g->num_vertices);
 	return OK;
 	
 }
