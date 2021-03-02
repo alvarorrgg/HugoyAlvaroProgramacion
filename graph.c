@@ -159,6 +159,26 @@ int graph_print (FILE *pf, const Graph *g){
 			}
 		}
 	}
+	printf("\n");
 	return 1;
 }
+
+Status graph_readFromFile (FILE *fin, Graph *g){
+	int i, l1, l2;
+	char desc[50];
+	fscanf(fin, "%d", &g->num_vertices);
+	for (i=0; i<=g->num_vertices; i++){
+		fgets(desc , 100, fin);
+		g->vertices[i] = vertex_initFromString(desc);
+	}
+	for(i=0; i<g->num_vertices; i++){
+		g->vertices[i]=g->vertices[i+1];
+	}
+	while(fscanf(fin, "%d %d", &l1, &l2)!= -1){
+		graph_newEdge(g, l1, l2);
+	}
+	return OK;
+}
+
+
 
