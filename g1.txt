@@ -13,3 +13,7 @@ Ejercicio 3:
 	a) La implementación en si es correcta, el problema es que en la linea donde se define el puntero Vertex, se llama a la estructura Vertex y esta estructura es una estructura que aunque tiene su cabecera en vertex.h que es publica, tiene su definición en vertex.c de manera privada por lo cual a la hora de reservar memoria para el puntero Vertex, el programa sabe que la estructura existe pero no que tiene dentro por lo cual no es correcto.
 	b) Sin embargo, en este caso, aunque es muy parecido al anterior, se está reservando la memoria dentro de Vertex.c y es en Vertex.c donde se encuentra la estructura de datos por lo cual el programa si sabe cuanta memoria tiene que reservar y por lo cual es correcta la implementación.
 	c)Este caso también es correcto ya que en el vertex.h esta la cabecera de la función que esta correcta, en el vertex.c esta la función que también esta correctamente implementadada y por ultimo no se produce ningun error en el main al llamar a la funcion asi que esta todo correcto.
+
+
+Ejercicio 4:
+	No hemos necesitado implementar ninguna función privada para la realización de este código, unicamente hemos utilizado funciones públicas ya definidas en el ejercicio 1 y 2.

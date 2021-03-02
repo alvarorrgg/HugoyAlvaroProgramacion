@@ -164,11 +164,14 @@ int graph_print (FILE *pf, const Graph *g){
 }
 
 Status graph_readFromFile (FILE *fin, Graph *g){
+	if(fin==NULL || g==NULL){
+		return ERROR;
+		}
 	int i, l1, l2;
 	char desc[50];
-	fscanf(fin, "%d", &g->num_vertices);
+	if(fscanf(fin, "%d", &g->num_vertices)==-1) return ERROR;
 	for (i=0; i<=g->num_vertices; i++){
-		fgets(desc , 100, fin);
+		if(fgets(desc , 100, fin)==NULL) return ERROR;
 		g->vertices[i] = vertex_initFromString(desc);
 	}
 	for(i=0; i<g->num_vertices; i++){
