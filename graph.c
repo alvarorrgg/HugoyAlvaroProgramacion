@@ -34,7 +34,7 @@ void graph_free(Graph *g){
 }
 
 Status graph_newVertex(Graph *g, char *desc){
-	if( g==NULL){
+	if( g==NULL || g->num_vertices>=4096){
 		return ERROR;
 	}
 	Vertex *v=vertex_initFromString(desc);
@@ -63,7 +63,7 @@ Status graph_newVertex(Graph *g, char *desc){
 }
 
 Status graph_newEdge(Graph *g, long orig, long dest){
-	if(g==NULL || !graph_contains(g,orig) || !graph_contains(g,dest)){
+	if(g==NULL || !graph_contains(g,orig) || !graph_contains(g,dest) || graph_connectionExists(g,orig,dest)){
 	return ERROR;
 	}
 	g->connections[orig][dest]=TRUE;
@@ -105,6 +105,7 @@ Bool graph_connectionExists(const Graph *g, long orig, long dest){
 }
 
 int graph_getNumberOfConnectionsFromId(const Graph *g, long id){
+	if(g==NULL || !graph_contains(g, id)) return -1;
 	int i,contador=0;
 	for(i=0;i<g->num_vertices;i++){
 		if(graph_connectionExists(g,id,vertex_getId (g->vertices[i]))){
@@ -129,8 +130,8 @@ long *graph_getConnectionsFromId(const Graph *g, long id){
 }
 
 int graph_getNumberOfConnectionsFromTag(const Graph *g, char *tag){
-	int seleccion=0;
-	if(g==NULL || strlen(tag)<=0){
+	int seleccion=-2;
+	if(g==NULL || tag==NULL){
 		return -1;
 	}
 	for(int i =0;i<g->num_vertices;i++){
