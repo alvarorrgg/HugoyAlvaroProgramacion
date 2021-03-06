@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "vertex.h"
+#
 # define MAX_VTX 4096
 #define TAG_LENGTH 64
 
@@ -10,17 +11,25 @@ Bool connections[MAX_VTX][MAX_VTX]; /*!<Adjacency matrix */
 int num_vertices; /*!<Total number of vertices */
 int num_edges; /*!<Total number of edges */
 };
-
-	
+/*Funciones privadas*/
+Status  graph_connections_update(Graph *g);
+/*Definición de funciones*/
 Graph * graph_init(){
 	Graph *g=(Graph*)malloc(sizeof(Graph));
 	if(g==NULL){
 		return NULL;
 	}
+	g->num_vertices=0;
+	g->num_edges=0;
+	
 	return g;
 }
 
 void graph_free(Graph *g){
+	int i=0;
+	for(i=0;i<g->num_vertices;i++){
+		vertex_free(g->vertices[i]);
+		}
 	free(g);
 }
 
@@ -37,10 +46,18 @@ Status graph_newVertex(Graph *g, char *desc){
 		free(v);
 		return OK;
 	}
-	else{
-			g->vertices[g->num_vertices]=v;
-			g->num_vertices++;
+	else{	
+		free(v);
+		g->vertices[g->num_vertices]=vertex_initFromString(desc);
+		g->num_vertices++;
+		if(graph_connections_update(g)==ERROR){
+			g->vertices[g->num_vertices]=NULL;
+			g->num_vertices--;
+			printf("Error al actualizar las conexiones");
+			return ERROR;
+			}
 	    }
+
 	return OK;
 	
 }
@@ -148,7 +165,7 @@ long *graph_getConnectionsFromTag(const Graph *g, char *tag){
 
 int graph_print (FILE *pf, const Graph *g){
 	if(g==NULL) return -1;
-	
+	fprintf(stdout,"\nGraph:");
 	for(int i =0;i<g->num_vertices;i++){
 		fprintf(stdout,"\n");
 		vertex_print (pf, g->vertices[i]);
@@ -162,22 +179,31 @@ int graph_print (FILE *pf, const Graph *g){
 	printf("\n");
 	return 1;
 }
+Status graph_connections_update(Graph *g){
+	int NV=g->num_vertices;
+	int i=0;
+	if(g==NULL) return ERROR;
+	for(i=0;i<NV;i++){
+		g->connections[vertex_getId (g->vertices[i])][vertex_getId (g->vertices[g->num_vertices-1])]=FALSE;
+	}
+	return OK;
+}
 
 Status graph_readFromFile (FILE *fin, Graph *g){
+	int cont;
 	if(fin==NULL || g==NULL){
 		return ERROR;
 		}
-	int i, l1, l2;
-	char desc[50];
-	if(fscanf(fin, "%d", &g->num_vertices)==-1) return ERROR;
-	for (i=0; i<=g->num_vertices; i++){
+	int l1, l2;
+	char desc[50];	
+	if(fscanf(fin, "%d\n", &cont)==-1) return ERROR;
+
+	for (g->num_vertices=0;g->num_vertices<cont;){
 		if(fgets(desc , 100, fin)==NULL) return ERROR;
-		g->vertices[i] = vertex_initFromString(desc);
+		if(graph_newVertex(g,desc)==ERROR)return ERROR;
+
 	}
-	for(i=0; i<g->num_vertices; i++){
-		g->vertices[i]=g->vertices[i+1];
-	}
-	while(fscanf(fin, "%d %d", &l1, &l2)!= -1){
+	while(fscanf(fin, "%d %d", &l1, &l2) == 2){
 		graph_newEdge(g, l1, l2);
 	}
 	return OK;

@@ -10,16 +10,13 @@ int main(int argc, char * argv[]){
 		return 0;
 	}
 	Graph *g = graph_init();
-	FILE * f = fopen(argv[1], "r");
-	
+	FILE * f = fopen(argv[1], "r");	
 	graph_readFromFile (f, g);
 	graph_print(stdout, g);
-	
-	
-	
-	
 	graph_free(g);
+	fclose(f);
 	return 0;
+
 }
 	
 	

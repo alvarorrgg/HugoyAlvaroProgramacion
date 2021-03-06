@@ -1,16 +1,16 @@
 
-p1_e2: p1_e2.o graph.o vertex.o 
-	gcc -o p1_e2 p1_e2.o vertex.o graph.o
+p1_e3: p1_e3.o graph.o vertex.o 
+	gcc -o p1_e3 p1_e3.o vertex.o graph.o
 
-p1_e2.o: p1_e2.c vertex.h types.h graph.h
-	gcc -c p1_e2.c
+p1_e3.o: p1_e3.c vertex.h types.h graph.h
+	gcc -c -g p1_e3.c
 
 graph.o: graph.c graph.h vertex.h
-	gcc -c graph.c
+	gcc -c -g graph.c
 
 vertex.o: vertex.c vertex.h
-	gcc -c vertex.c
+	gcc -c -g vertex.c
 
 clean: 
 	@echo cleaning...
-	rm *.o p1_e2
+	rm *.o p1_e3
