@@ -63,7 +63,7 @@ Status graph_newVertex(Graph *g, char *desc){
 }
 
 Status graph_newEdge(Graph *g, long orig, long dest){
-	if(g==NULL || !graph_contains(g,orig) || !graph_contains(g,dest) || graph_connectionExists(g,orig,dest)){
+	if(g==NULL || !graph_contains(g,orig) || !graph_contains(g,dest)|| graph_connectionExists(g,orig,dest) ){
 	return ERROR;
 	}
 	g->connections[orig][dest]=TRUE;
@@ -166,7 +166,6 @@ long *graph_getConnectionsFromTag(const Graph *g, char *tag){
 
 int graph_print (FILE *pf, const Graph *g){
 	if(g==NULL) return -1;
-	fprintf(stdout,"\nGraph:");
 	for(int i =0;i<g->num_vertices;i++){
 		fprintf(stdout,"\n");
 		vertex_print (pf, g->vertices[i]);
@@ -186,6 +185,9 @@ Status graph_connections_update(Graph *g){
 	if(g==NULL) return ERROR;
 	for(i=0;i<NV;i++){
 		g->connections[vertex_getId (g->vertices[i])][vertex_getId (g->vertices[g->num_vertices-1])]=FALSE;
+	}
+	for(i=0;i<NV;i++){
+		g->connections[vertex_getId (g->vertices[g->num_vertices-1])][vertex_getId (g->vertices[i])]=FALSE;
 	}
 	return OK;
 }

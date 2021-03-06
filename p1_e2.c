@@ -32,6 +32,7 @@ conexiones=graph_getConnectionsFromTag(g,"Toledo");
 for(int i=0;i<graph_getNumberOfConnectionsFromTag(g,"Toledo");i++){
 	printf("Connections from Toledo: %li",conexiones[i]);
 	}
+printf("\nGraph:");
 graph_print (stdout,g);
 graph_free(g);
 free(conexiones);
